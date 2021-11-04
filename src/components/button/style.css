@@ -1,0 +1,15 @@
+button:hover{
+    cursor: pointer;
+    font-weight: bolder;
+    transform: scale(1.1);
+    text-decoration: underline;
+}
+
+button{
+    display: inline-block;
+    font-size: 1.3rem;
+    border: 0px;
+    transition: transform 0.2s ease-in-out;
+    background-color: transparent;
+    text-transform: uppercase;
+}
