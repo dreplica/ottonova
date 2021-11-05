@@ -1,5 +1,3 @@
-export enum WidgetType {
-    CHAT = 'chat_widget',
-    RATE = 'rate_widget',
-    MAP = 'map_widget',
+export enum AUTHOR {
+    CLIENT = 'CLIENT',
 }

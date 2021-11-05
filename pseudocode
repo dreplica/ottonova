@@ -1,36 +1,31 @@
-Steps to take when a user starts the game
-- Get the api games
-- cache them on localstorage
+display a register or login screen
 
-- so user can't see the cached data, change it to JSON string then to base64
-    : create helper function that uses atob and btoa
+on register user should confirm by email and redirected or just proceed
 
-- on refreshing or starting the browser
-- if the user has a game the were playing show popup
-    :(message: do you want to continue with the former game or new game)
-    :popup is shown only if they have an existing game in local storage
-    : if user selects continue: 
-        : it means the game is stored in cache
-        : continuous game is cached as well to know where to start from
-    : if user selects new game:
-        : fetch api and save on local storage
-- if the user is done seeing their score, clean local storage saving only score
-    : on entering page, if user has finished a game, check score details on cache
-      take user to score page
-  else : take to welcome screen
-  
-- when users goes to the next question, fetch that question from cache/reducer and show to user
+on entering the application
+- it route to the chat screen
+- top nav has user avatar and a drop down icon 
+    - drop down includes - logout
+- on chat screen user can see users the chat with
+- the can see the chats 
+- the can see current users profile
 
+- when you type help - this items show up:
+    - get health location
+    - schedule appointment 
+    - end chat
 
-Architecture:
-- State: using useReducer and context
-    : context for API monitoring 
-    : Reducer for data handling
+- if users selects get health location:
+    - display a modal with a map on the screen
+- if user selecrts schedule appointment:
+    - display a date modal,
+    - on selecting date modal, display some days 
+    - then display {user} {day}
+- if users select end chat:
+    - display a popup modal to rate chat experience
+    - with two smileys 😞 and 😉
+    - remove input field
 
-- folder/files:
-    : folder - components contains all subcomponents
-    : folder - pages includes:
-        - welcome screen
-        - game session
-        - score board
-    : file - route
+- if users has used any widget during chat lifetime:
+    - dont show that again in help options, or make it blurk and disabled
+    

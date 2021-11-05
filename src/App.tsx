@@ -1,11 +1,13 @@
-import React from 'react'
-import Render from './render-widget'
+import React from "react";
+import Router from "./routes";
+import { ChakraProvider } from "@chakra-ui/react";
 
-interface props {widget: HTMLDivElement, rest?: React.PropsWithChildren<any>}
+function App() {
+  return (
+    <ChakraProvider>
+      <Router />
+    </ChakraProvider>
+  ); 
+}
 
-function App({widget}: props) {
-		return (<Render widget={widget}/>
-		)
-} 
- 
-export default App
+export default App;
