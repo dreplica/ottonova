@@ -6,10 +6,10 @@ import ChatStart from "../../components/chat/username";
 import ChatComponent from "../../components/chat/chat-component";
 import ChatList from "../../components/chat/chat-list";
 import ChatProfile from "../../components/chat/chat-profile";
-    //   color: text-header ->#1b0423
+//   color: text-header ->#1b0423
 
 function ChatWidget() {
-  const [user, setUser] = React.useState('dreplica');
+  const [user, setUser] = React.useState("dreplica");
   const [message, setMessage] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -18,25 +18,17 @@ function ChatWidget() {
     //   return ()=>{
     //       window.removeEventListener('click', removeElementFromDom)
     //   }
-  },[])
+  }, []);
 
+  const handleMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
 
-   const handleMessage = (e: ChangeEvent<HTMLTextAreaElement>) =>{
-     setMessage(e.target.value)
-   }
-
-    const startChat = (event: React.MouseEvent<HTMLButtonElement>):void => {
-
-    }
+  const startChat = (event: React.MouseEvent<HTMLButtonElement>): void => {};
   //React.useEffect(() => {}) //for socket io
   return (
-
-    <Box>
-      <HStack>
-        <ChatList />
-        <ChatComponent />
-        <ChatProfile />
-      </HStack>
+    <Box h="full" w="full" position="relative">
+      <ChatComponent />
     </Box>
   );
 }

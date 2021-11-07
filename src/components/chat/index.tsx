@@ -30,7 +30,7 @@ function ChatComponent({ message, handleMessage }: iProps) {
     { author: "ottonova bot", message: "Hi, your message was hello!" },
   ]);
   return (
-    <VStack position="relative" w="full" h="100%" zIndex="-2">
+    <VStack position="relative" flex="1" h="100%" zIndex="-2">
       <HStack w="100%" mx="-10" mb="20" justifyContent="space-between">
         <Text fontSize="lg" fontWeight="bold">
           Ottonova Bot

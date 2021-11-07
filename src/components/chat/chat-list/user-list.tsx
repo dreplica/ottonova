@@ -7,27 +7,32 @@ interface iProps {
 
 function Userlist({ name }: iProps) {
   //get active chatter from context
-  const nameChars = name.substring(0, 2);
+  const nameChars = name.substring(0, 2).toLocaleUpperCase();
   const active = name && true;
   return (
     <HStack
       shadow="md"
       w="full"
       p="8"
-      bg={active ? "#292F4C" : "white"}
+      _hover={{cursor: 'pointer', bg: 'gray.100'}}
+      // bg={active ? "#292F4C" : "white"}
       display="flex"
       justifyContent="flex-start"
-      alignContent="center"
+      alignItems="flex-start"
+      rounded="lg"
+      boxShadow="xl"
+      bg="white"
     >
       <Box
         rounded="full"
-        w="100px"
-        h="100px"
+        minW="70px"
+        h="70px"
         bg="teal.400"
         color="white"
         display="flex"
         alignItems="center"
         justifyContent="center"
+        flexWrap="nowrap"
       >
         <Text>{nameChars}</Text>
       </Box>

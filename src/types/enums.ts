@@ -1,3 +1,3 @@
 export enum AUTHOR {
-    CLIENT = 'CLIENT',
+    CLIENT = 'client',
 }

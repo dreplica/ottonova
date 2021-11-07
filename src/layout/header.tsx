@@ -16,17 +16,15 @@ interface iProps{
 
 function Header({children}: iProps) {
   return (
-    <Box>
-      <VStack>
-        <HStack>
+      <VStack w="full" h="full" >
+        {/* <HStack h="10%" w="full" borderBottom="1px solid whitesmoke" bg="white">
           <Box>
             <Text>AD</Text>
           </Box>
           <RiArrowDropDownLine />
-        </HStack>
+        </HStack> */}
         {children}
       </VStack>
-    </Box>
   );
 }
 

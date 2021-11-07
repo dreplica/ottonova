@@ -12,19 +12,21 @@ function ChatProfile() {
   const nameChars = name.substring(0, 2);
 
   return (
-    <VStack>
-      <HStack
+    <VStack flex="1" p="3">
+      <Box
         rounded="full"
-        w="300px"
-        h="300px"
+        w="200px"
+        style={{ aspectRatio: "1/1" }}
         bg="teal.400"
         color="white"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
-        <Text position="relative" top="25%">{nameChars}</Text>
-      </HStack>
+        <Text fontSize="4rem" textTransform="uppercase">
+          {nameChars}
+        </Text>
+      </Box>
       <Text>{name}</Text>
       <Text>Munich, Germany</Text>
       <HStack display="flex" justifyContent="space-evenly">
@@ -32,22 +34,22 @@ function ChatProfile() {
         <RiTwitterLine />
         <RiInstagramLine />
       </HStack>
-      <Divider my="2"/>
+      <Divider my="2" />
       <VStack>
-        <HStack>
+        <HStack justifyContent="flex-end">
           <Text textAlign="right" mr="4">
             Phone:
           </Text>
           <Text>remember to put number here</Text>
         </HStack>
-        <HStack>
+        <HStack display="flex" justifyContent="flex-end">
           <Text textAlign="right" mr="4">
             E-mail:
           </Text>
           <Text>remember to put email here</Text>
         </HStack>
       </VStack>
-      <Divider my="2"/>
+      <Divider my="2" />
     </VStack>
   );
 }

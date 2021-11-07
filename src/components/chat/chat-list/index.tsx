@@ -5,7 +5,7 @@ import UserList from "./user-list";
 
 //to persist a chat with a user append the name on url/dreplica
 
-const users = [
+const Users = [
   { name: "Ottonova Bot" },
   { name: "Ottonova Bot" },
   { name: "Ottonova Bot" },
@@ -21,21 +21,24 @@ function ChatProfile() {
 
   const users = React.useMemo((): { name: string }[] => {
     //check chache before
-    return users;
+    return Users;
   }, [input]);
 
   return (
-    <VStack w="full" p="5">
+    <VStack w="full" p="5" h="full" flex="1">
       <Input
         value={input}
         onChange={inputHandler}
         placeholder="Search for user"
-        variant='none'
-        rounded="sm"
+        variant='filled'
+        px="5"
+        py="3"
+        bg="white"
+        rounded="3xl"
         size="full"
         mb="3"
       />
-      <VStack spacing="4" p="5">
+      <VStack spacing="4" w="full" h="90%" overflow="auto">
         {/* if route path is username = focus user */}
         {users.map((user) => (
           <UserList name={user.name} />
