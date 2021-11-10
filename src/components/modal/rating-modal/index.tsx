@@ -2,24 +2,17 @@ import React from "react";
 import { HStack, Text, Button } from "@chakra-ui/react";
 import CustomModal from "..";
 import { AppContext } from "../../../context/app-state";
+import { iProps } from "../../../types/props";
 
-interface iMap {
-  isOpen: boolean;
-  onClose(): void;
-  closeCompleteModal(): void;
-}
-
-function RateModel({ isOpen, onClose, closeCompleteModal }: iMap) {
-    const {Socketio} = React.useContext(AppContext)
+function RateModel({ isOpen, onClose }: iProps) {
+    const {command} = React.useContext(AppContext)
 
     React.useEffect(() =>{
         return ()=>{}
-    }, [])
+    }, [command.data])
 
     const processRate = () =>{
-        // Socketio?.emit("command")
         onClose()
-        closeCompleteModal()
     }
   return (
     <CustomModal
@@ -42,6 +35,7 @@ function RateModel({ isOpen, onClose, closeCompleteModal }: iMap) {
           onClick={processRate}
           display="flex"
           flexDir="column"
+          data-rate={command?.data?.[0]}
         >
           😉
           <Text fontSize="2rem">Great</Text>
@@ -54,6 +48,7 @@ function RateModel({ isOpen, onClose, closeCompleteModal }: iMap) {
           onClick={processRate}
           display="flex"
           flexDir="column"
+          data-rate={command?.data?.[1]}
         >
           😓
           <Text fontSize="2rem">Sad</Text>

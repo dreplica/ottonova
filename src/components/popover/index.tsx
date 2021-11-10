@@ -9,19 +9,10 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import React from "react";
-import { HiDotsVertical } from "react-icons/hi";
-import { MdArrowDropDown, MdOutlineArrowDropDown } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { PopOver as iPop } from "../../types/props";
 
-interface PopOver {
-  Body?: JSX.IntrinsicElements;
-  children(...props: any): React.ReactChild;
-  isOpen: boolean;
-  onClose(): void;
-}
-
-function PopOver({ Body, children, isOpen, onClose }: PopOver) {
+function PopOver({ Body, children, isOpen, onClose }: iPop) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} placement="bottom-end">
       <PopoverTrigger>

@@ -13,17 +13,13 @@ function ChatInput() {
 
   const handleSubmit = (e:  React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      console.log("starting")
       setState('Client', input)
       Socketio?.emit("message", {
           author: 'Client', 
           message: input,
       })
+      setInput("")
   }
-
-  React.useEffect(() => {
-     console.log('rerendered')
-  }, [])
 
   return (
     <HStack
@@ -34,7 +30,6 @@ function ChatInput() {
       w="full"
       h="20%"
       bg="#F4F7FC"
-    //   onSubmit={handleSubmit}
     >
       <Textarea
         resize="none"

@@ -9,7 +9,7 @@ const DAYS = [
 ];
 
 export const getDays = (ISODate: string) => {
-	const day = new Date(ISODate).getDay()
+	const day = new Date(ISODate).getDay() ?? 1
 	const result = [];
 	let count = day;
 	while (true) {

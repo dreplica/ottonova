@@ -1,22 +1,34 @@
 import React from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
+import { getUserDetails } from "../../auth/register";
+import { AppContext } from "../../context/app-state";
 
 interface iProps extends RouteProps {
-  component:React.ComponentType
+  component: React.ComponentType;
 }
 
-function ProtectedRoutes({ component, ...rest }: iProps){
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
+function ProtectedRoutes({ component: Component, ...rest }: iProps) {
+  const { setUsername } = React.useContext(AppContext);
+  const token = localStorage.getItem("token");
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      alert("You are logged in");
-      setIsLoggedIn(true);
-    }
+      getUserDetails(token as string)
+        .then((res) => {
+          setUsername(res?.username);
+        })
+        .catch((err) => {
+          alert("You are not logged in");
+        });
+    
   }, []);
- 
-  return !isLoggedIn ?  <Redirect to="/" /> :<Route component={component} {...rest} />;
+
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        return token ? <Component /> : <Redirect to="/signup" />;
+      }}
+    />
+  );
 }
 
 export default ProtectedRoutes;

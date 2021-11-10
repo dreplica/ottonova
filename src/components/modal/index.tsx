@@ -7,14 +7,7 @@ import {
   ModalCloseButton,
   ModalBody,
 } from "@chakra-ui/react";
-
-interface iModal {
-  onClose(): void;
-  isOpen: boolean;
-  children: JSX.Element;
-  header?:string;
-  [rest:string]: any
-}
+import { iModal } from "../../types/props";
 
 function CustomModal({ onClose, isOpen, children, header, ...rest }: iModal) {
   return (

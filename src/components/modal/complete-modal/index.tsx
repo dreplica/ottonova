@@ -1,42 +1,40 @@
 import React from "react";
-import { HStack, Text, Button } from "@chakra-ui/react";
+import { HStack, Button } from "@chakra-ui/react";
 import CustomModal from "..";
-import RateModel from "../rating-modal";
+import { AppContext } from "../../../context/app-state";
+import { iProps } from "../../../types/props";
 
-interface iMap {
-  isOpen: boolean;
-  onClose(): void;
-}
-
-function CompleteModal({ isOpen, onClose }: iMap) {
-  const [openRateModal, setRateModal] = React.useState(false);
-
-  const toggleRateModal = () => {
-    setRateModal(!openRateModal);
-  };
-
+function CompleteModal({ isOpen, onClose }: iProps) {
+  const { command } = React.useContext(AppContext);
+  React.useEffect(() => {
+    return () => {};
+  }, [command.data]);
   return (
     <CustomModal isOpen={isOpen} onClose={onClose} size="xl" header="End Chat">
       <>
-        {/* <Text fontSize="2rem">End Chat</Text> */}
         <HStack
           justifyContent="space-evenly"
           alignItems="center"
           w="full"
           h="full"
         >
-          <Button as="button" fontSize="2rem" onClick={toggleRateModal}>
+          <Button
+            as="button"
+            fontSize="2rem"
+            onClick={onClose}
+            data-complete={command?.data?.[0]}
+          >
             Yes
           </Button>
-          <Button as="button" fontSize="2rem" onClick={onClose}>
+          <Button
+            as="button"
+            fontSize="2rem"
+            onClick={onClose}
+            data-complete={command?.data?.[1]}
+          >
             No
           </Button>
         </HStack>
-        <RateModel
-          isOpen={openRateModal}
-          onClose={toggleRateModal}
-          closeCompleteModal={onClose}
-        />
       </>
     </CustomModal>
   );

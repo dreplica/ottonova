@@ -1,17 +1,13 @@
 import React from "react";
 import { VStack, Text } from "@chakra-ui/react";
 import { AUTHOR } from "../../../types/enums";
-import { AppContext, Message } from "../../../context/app-state";
+import { AppContext } from "../../../context/app-state";
+import { Message } from "../../../types/props";
 
 function ChatMessages() {
-  const { state, Socketio, setState, setOnline, online } = React.useContext(AppContext);
-
-  //get sockets message from API
-  //but first get cached messages from localStorage in useEffect
+  const { state, Socketio, setState } = React.useContext(AppContext);
 
   React.useEffect(() => {
-    // updateOnline()
-    console.log('rerendered')
     listenForMessage()
     return disconnect;
   }, []);
@@ -19,14 +15,6 @@ function ChatMessages() {
   const disconnect = () => {
     Socketio?.off('message');
   };
-
-  const updateOnline = () => {
-      console.log(Socketio)
-      Socketio?.on('connect', ()=>{
-          console.log("hello connecting")
-          setOnline(true)
-      })
-  }
 
   const listenForMessage = () => {
     Socketio?.on("message", (message: Message) => {

@@ -10,9 +10,9 @@ function Index() {
     <Router>
       <React.Suspense fallback={<p>loading...</p>}>
         <Switch>
-          <Route exact path="/signup" component={Auth} />
-          <ProtectedRoutes  path="/chat" component={ChatWidget} />       
           <ProtectedRoutes exact path="/" component={ChatWidget} />        
+          <Route path="/signup" component={Auth} />
+          {/* <ProtectedRoutes  path="/chat" component={ChatWidget} />        */}
         </Switch>
       </React.Suspense>
     </Router>

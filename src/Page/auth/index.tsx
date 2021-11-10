@@ -15,14 +15,14 @@ import { login, Register } from "../../auth/register";
 
 function RegisterUser() {
   const toast = useToast();
-  const { replace } = useHistory();
+  const { replace, push } = useHistory();
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [type, setType] = React.useState("login");
+  const token = localStorage.getItem("token");
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       replace("/");
     }
@@ -34,6 +34,7 @@ function RegisterUser() {
   ) => {
     (e as unknown as React.FormEvent<HTMLFormElement>).preventDefault();
     setLoading(true);
+    localStorage.removeItem("token");
     if (type !== "login") {
       Register(username, password)
         .then((res) => {
@@ -54,9 +55,8 @@ function RegisterUser() {
     }
     login(username, password)
       .then((res) => {
-        // setLoading(false);
-        alert("yo")
-        replace("/");
+        setLoading(false);
+        push("/");
      })
       .catch((err) => {
         setLoading(false);

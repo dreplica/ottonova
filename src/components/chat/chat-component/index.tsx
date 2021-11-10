@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import {
   VStack,
   HStack,
@@ -8,7 +9,9 @@ import {
   UnorderedList,
   ListItem,
   Button,
+  useToast,
 } from "@chakra-ui/react";
+
 import ChatMessages from "./chat-messages";
 import ChatInput from "./chat-input";
 import { AppContext } from "../../../context/app-state";
@@ -17,36 +20,86 @@ import MapModal from "../../modal/map-modal";
 import RateModel from "../../modal/rating-modal";
 import CompleteModal from "../../modal/complete-modal";
 import ScheduleModal from "../../modal/schedule-modal";
-import { useHistory } from "react-router";
 
 function ChatComponent() {
+  const toast = useToast();
   const { replace } = useHistory();
   const [openMenu, setMenuState] = React.useState(false);
   const [openMapModal, setMapModal] = React.useState(false);
   const [openCompleteModal, setCompleteModal] = React.useState(false);
   const [openAppointmentModal, setAppointmentModal] = React.useState(false);
-  const { state, online } = React.useContext(AppContext);
+  const [openRateModal, setRateModal] = React.useState(false);
+  const [visited, setVisited] = React.useState<string[]>([]);
+  const { command, online, Socketio } = React.useContext(AppContext);
 
   const toggleMenuOption = () => {
     setMenuState(!openMenu);
   };
 
+  const toggleOptions = () => {
+    emitCommand();
+    toggleMenuOption();
+  };
+
   const toggleMapModal = () => {
+    setVisited([...visited, "map"]);
     setMapModal(!openMapModal);
   };
 
   const toggleAppointmentModal = () => {
+    setVisited([...visited, "date"]);
     setAppointmentModal(!openAppointmentModal);
   };
 
   const toggleCompleteModal = () => {
+    setVisited([...visited, "complete"]);
     setCompleteModal(!openCompleteModal);
+  };
+  const toggleRateModal = () => {
+    setVisited([...visited, "rate"]);
+    setRateModal(!openRateModal);
+  };
+
+  const emitCommand = () => {
+    Socketio?.emit("command", {
+      author: "client",
+    });
   };
 
   const Logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     replace("/signup");
   };
+
+  React.useEffect(() => {
+    switch (command.type) {
+      case "date":
+        if (visited.includes("date")) break;
+        toggleAppointmentModal();
+        break;
+      case "map":
+        if (visited.includes("map")) break;
+        toggleMapModal();
+        break;
+      case "complete":
+        if (visited.includes("complete")) break;
+        toggleCompleteModal();
+        break;
+      case "rate":
+        if (visited.includes("rate")) break;
+        toggleRateModal();
+        break;
+      default:
+        {
+          visited.length &&
+            toast({
+              description: `You already accesed ${command?.type} option`,
+              status: "warning",
+            });
+        }
+        break;
+    }
+  }, [command?.type]);
 
   return (
     <>
@@ -76,22 +129,8 @@ function ChatComponent() {
             {(arg) => (
               <UnorderedList listStyleType="none">
                 <ListItem>
-                  <Button w="full" variant="none" onClick={toggleMapModal}>
-                    View Location
-                  </Button>
-                </ListItem>
-                <ListItem>
-                  <Button
-                    w="full"
-                    variant="none"
-                    onClick={toggleAppointmentModal}
-                  >
-                    Schedule Appointment
-                  </Button>
-                </ListItem>
-                <ListItem>
-                  <Button w="full" variant="none" onClick={toggleCompleteModal}>
-                    End Chat
+                  <Button w="full" variant="none" onClick={toggleOptions}>
+                    Random Commmand
                   </Button>
                 </ListItem>
                 <ListItem>
@@ -142,6 +181,7 @@ function ChatComponent() {
         isOpen={openAppointmentModal}
         onClose={toggleAppointmentModal}
       />
+      <RateModel isOpen={openRateModal} onClose={toggleRateModal} />
     </>
   );
 }

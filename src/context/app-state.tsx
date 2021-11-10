@@ -1,40 +1,40 @@
 import React from "react";
 import { io, Socket } from "socket.io-client";
-
-export interface Message {
-  author: string;
-  message: string;
-}
-
-export interface AppState {
-  state: Message[];
-  online: boolean;
-  Socketio: Socket | null
-  setState(prop: string, val: any): void;
-  setOnline(prop: boolean): void;
-}
+import { AppState, Command, Message } from "../types/props";
 
 export const AppContext = React.createContext<AppState>({
   state: [],
+  username: "",
+  command: {type:"", data:null},
   online: false,
   Socketio: null,
   setState: (arg) => {},
   setOnline: (arg) => {},
+  setUsername: (arg) => {},
 });
 
 function AppStateContext<T extends { children: React.ReactChild }>({
   children,
 }: T) {
   const [messages, setMessages] = React.useState<Message[]>([]);
+  const [username, setUsername] = React.useState("");
   const [online, setOnline] = React.useState<boolean>(false);
   const [Socketio, setSocket] = React.useState<Socket | null>(null);
+  const [command, setCommand] = React.useState<Command>({type:"", data: null});
 
   const updateOnline = React.useCallback((arg) => {
     setOnline(arg);
   }, []);
 
+  const updateUsername = React.useCallback((arg) => {
+    setUsername(arg);
+  }, []);
+
+  const updateCommand = React.useCallback((arg) => {
+    setCommand(arg);
+  }, []);
+
   const updateMessage = React.useCallback((author, message) => {
-    console.log(messages);
     setMessages([
       ...messages,
       {
@@ -45,27 +45,29 @@ function AppStateContext<T extends { children: React.ReactChild }>({
   }, []);
 
   React.useEffect(() => {
-        const socket = io(process.env.REACT_APP_SOCKET_URL as string);
-        socket.on('connect', ()=>{
-            console.log("hello connecting")
-            
-            updateOnline(true)
-        })
-        setSocket(socket)
-        return () => {
-            console.log("closing")
-            socket.disconnect()
-            socket.close()
-        }
-  },[]);
+    const socket = io(process.env.REACT_APP_SOCKET_URL as string);
+    socket.on("connect", () => {
+      updateOnline(true);
+    });
+    socket.on("command", ({command})=>{
+      updateCommand(command)
+    })
+    setSocket(socket);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   return (
     <AppContext.Provider
       value={{
         online,
         Socketio,
+        username,
+        command,
         state: messages,
         setState: updateMessage,
         setOnline: updateOnline,
+        setUsername: updateUsername,
       }}
     >
       {children}
