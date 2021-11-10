@@ -14,10 +14,6 @@ function ChatWidget() {
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    //   window.addEventListener('click', removeElementFromDom)
-    //   return ()=>{
-    //       window.removeEventListener('click', removeElementFromDom)
-    //   }
   }, []);
 
   const handleMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
