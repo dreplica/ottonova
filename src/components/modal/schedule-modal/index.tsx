@@ -6,7 +6,7 @@ import { getDays } from "../../../utils/helper";
 import { iProps } from "../../../types/props";
 
 function ScheduleModal({ isOpen, onClose }: iProps) {
-  const { setState, command } = React.useContext(AppContext);
+  const { setState, command, username} = React.useContext(AppContext);
   const [date, setDate] = React.useState<string[]>([]);
 
   React.useEffect(() => {
@@ -22,7 +22,7 @@ function ScheduleModal({ isOpen, onClose }: iProps) {
   };
 
   const updateDate = (day: string) => {
-    setState("dreplica", `Dreplica, ${day}`);
+    setState(username, `${username}, ${day}`);
   };
 
   return (

@@ -14,7 +14,7 @@ export async function Register(username: string, password: string){
     const data = await firestore.getDoc(docRef);
     if (data.exists()) {
       const { token, username: user } = data.data();
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", username);
       return { error: false, username: user };
     }
     throw new Error("Username might be taken");
@@ -36,7 +36,7 @@ export async function login(username: string, password: string) {
       if (data.data().password !== password) {
         throw new Error("Username and Password not correct");
       }
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", username);
       return { error: false, username };
     }
     throw new Error("Username and Password not correct");
@@ -65,10 +65,10 @@ export async function getUserDetails(token: string) {
   try {
     const docRef = firestore.doc(db, "users", token);
     const data = await firestore.getDoc(docRef);
-    if (data.exists()) {
+    if (!data.exists()) {
       throw new Error("User does not exists");
     }
-    return data.data();
+    return data.data().username.match(/.+(?=\@)/gi)[0] ?? "";
   } catch (error: any) {
     console.log(error);
     throw { error, message: "Please try again" };

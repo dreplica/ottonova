@@ -13,7 +13,7 @@ function ProtectedRoutes({ component: Component, ...rest }: iProps) {
   React.useEffect(() => {
       getUserDetails(token as string)
         .then((res) => {
-          setUsername(res?.username);
+          setUsername(res);
         })
         .catch((err) => {
           alert("You are not logged in");
